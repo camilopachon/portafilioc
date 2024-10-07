@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galería Interactiva</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f0f0f0;
+        }
+        .container {
+            width: 90%;
+            max-width: 600px;
+            position: relative;
+            overflow: hidden; /* Oculta las imágenes fuera de la vista */
+            border-radius: 8px;
+        }
+        .slider {
+            display: flex;
+            transition: transform 0.5s ease-in-out; /* Transición suave */
+        }
+        .slider img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            flex-shrink: 0; /* Evita que las imágenes se encojan */
+        }
+        .nav {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            transform: translateY(-50%);
+            padding: 0 10px; /* Espacio para los botones */
+        }
+        .prev, .next {
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            padding: 12px;
+            cursor: pointer;
+            border-radius: 50%;
+            font-size: 18px;
+            transition: background-color 0.3s;
+        }
+        .prev:hover, .next:hover {
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+
+        /* Media Queries para Dispositivos Móviles */
+        @media (max-width: 600px) {
+            .prev, .next {
+                padding: 8px;
+                font-size: 16px;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .prev, .next {
+                padding: 6px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="slider">
+        <!-- Asegúrate de que los nombres de las imágenes no tengan espacios -->
+        <img src="imagene/JPG/1.jpg" alt="Imagen 1">
+        <img src="imagene/JPG/2.jpg" alt="Imagen 2">
+        <img src="imagene/JPG/3.jpg" alt="Imagen 3">
+        <img src="imagene/JPG/4.jpg" alt="Imagen 4">
+        <img src="imagene/JPG/5.jpg" alt="Imagen 5">
+        <img src="imagene/JPG/6.jpg" alt="Imagen 6">
+        <img src="imagene/JPG/7.jpg" alt="Imagen 7">
+        <img src="imagene/JPG/8.jpg" alt="Imagen 8">
+        <img src="imagene/JPG/9.jpg" alt="Imagen 9">
+        <img src="imagene/JPG/10.jpg" alt="Imagen 10">
+        <img src="imagene/JPG/11.jpg" alt="Imagen 11">
+        <img src="imagene/JPG/12.jpg" alt="Imagen 12">
+        <img src="imagene/JPG/13.jpg" alt="Imagen 13">
+        <img src="imagene/JPG/14.jpg" alt="Imagen 14">
+        <img src="imagene/JPG/15.jpg" alt="Imagen 15">
+        <img src="imagene/JPG/16.jpg" alt="Imagen 16">
+        <img src="imagene/JPG/17.jpg" alt="Imagen 17">
+        <img src="imagene/JPG/18.jpg" alt="Imagen 18">
+        <img src="imagene/JPG/19.jpg" alt="Imagen 19">
+        <img src="imagene/JPG/20.jpg" alt="Imagen 20">
+        <img src="imagene/JPG/21.jpg" alt="Imagen 21">
+        <img src="imagene/JPG/22.jpg" alt="Imagen 22">
+        <img src="imagene/JPG/23.jpg" alt="Imagen 23">
+        <img src="imagene/JPG/24.jpg" alt="Imagen 24">
+        <img src="imagene/JPG/25.jpg" alt="Imagen 25">
+        <img src="imagene/JPG/26.jpg" alt="Imagen 26">
+        <img src="imagene/JPG/27.jpg" alt="Imagen 27">
+        <img src="imagene/JPG/28.jpg" alt="Imagen 28">
+    </div>
+    </div>
+    <div class="nav">
+        <button class="prev" onclick="moveSlide(-1)">&#10094;</button>
+        <button class="next" onclick="moveSlide(1)">&#10095;</button>
+    </div>
+</div>
+
+<script>
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slider img');
+    const totalSlides = slides.length;
+
+    function showSlide(index) {
+        const slider = document.querySelector('.slider');
+        slider.style.transform = `translateX(-${index * 100}%)`;
+    }
+
+    function moveSlide(step) {
+        currentSlide = (currentSlide + step + totalSlides) % totalSlides;
+        showSlide(currentSlide);
+    }
+
+    // Inicializar galería
+    showSlide(currentSlide);
+
+    // Soporte para Gestos de Deslizamiento (Swipe)
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    const sliderContainer = document.querySelector('.container');
+
+    sliderContainer.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+    }, false);
+
+    sliderContainer.addEventListener('touchend', (e) => {
+        touchEndX = e.changedTouches[0].screenX;
+        handleGesture();
+    }, false);
+
+    function handleGesture() {
+        const swipeThreshold = 50; // Mínima distancia de deslizamiento
+        if (touchEndX < touchStartX - swipeThreshold) {
+            // Swipe hacia la izquierda
+            moveSlide(1);
+        }
+        if (touchEndX > touchStartX + swipeThreshold) {
+            // Swipe hacia la derecha
+            moveSlide(-1);
+        }
+    }
+</script>
+
+</body>
+</html>
